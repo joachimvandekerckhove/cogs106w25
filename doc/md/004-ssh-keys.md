@@ -105,3 +105,6 @@ By generating SSH keys inside the Docker container and saving them in a persiste
 
 Feel free to refer back to your knowledge of containerization from the introductory guide ([001-introduction-to-containerization](001-introduction-to-containerization.md)) and VSCode setup to enhance this workflow ([003-connect-with-vscode](003-connect-with-vscode.md)).
 
+---
+
+Previous: [Connecting VSCode to your Docker container](003-connect-with-vscode.md)

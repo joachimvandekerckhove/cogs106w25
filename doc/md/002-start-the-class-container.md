@@ -147,3 +147,9 @@ Or, in the terminal:
 You’ve now set up the class Docker container, confirmed it works, and learned how to manage it using Docker Desktop. This container will be your consistent Python environment for all class activities.
 
 In the future, you could make new containers for new projects and manage them in Docker Desktop or submit them to Docker Hub.
+
+---
+
+Previous: [Introduction to containerization](001-introduction-to-containerization.md)
+
+Next: [Connecting VSCode to your Docker container](003-connect-with-vscode.md)

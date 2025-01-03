@@ -95,3 +95,9 @@ A new window will pop up with a different message in the bottom left.
 
 This setup allows you to use a full-featured development environment while keeping your code and dependencies isolated in a container.
 
+---
+
+Previous: [Start the class Docker container](002-start-the-class-container.md)
+
+Next: [What are SSH keys?](004-ssh-keys.md)
+
