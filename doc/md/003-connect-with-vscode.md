@@ -17,6 +17,8 @@ Before you begin, ensure that you have:
 
    - Follow the steps in the "Start the class Docker container" guide to set up and start the container.
 
+![](p/vscode-1.png)
+
 ---
 
 ## Connect using the Remote - Containers Extension
@@ -29,11 +31,21 @@ You can use the "Remote - Containers" extension to connect directly to the runni
    - Type `Remote-Containers: Attach to Running Container` and select it.
    - Choose `class-container` from the list.
 
+![](p/vscode-2.png)
+
+A new window will pop up with a different message in the bottom left.
+
+![](p/vscode-3.png)
+
 2. **Open the workspace**:
 
    - VSCode will open a new window where you can find the container's `/workspace` directory.
    - You can now edit, debug, and execute code directly inside the container.
    - You will have to install other extensions as needed, such as the Python one and the Jupyter one.
+
+![](p/vscode-4.png)
+
+![](p/vscode-5.png)
 
 ---
 
