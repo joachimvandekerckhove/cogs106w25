@@ -1,0 +1,3 @@
+# COGS 106 Computational Lab Skills
+
+> Sit tight...
