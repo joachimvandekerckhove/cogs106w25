@@ -1,27 +1,51 @@
+
+---
+title: "Tools of the trade III"
+author: "Joachim Vandekerckhove"
+date: "Winter 2025"
+output:
+  beamer_presentation:
+    theme: "metropolis"
+    incremental: true
+
+---
+
+# Contents
+
+- Introduction to containerization
+- Start the class Docker container
+- **Connect with VSCode**
+- What are SSH keys?
+
+---
+
+
 # Connecting VSCode to your Docker container
 
 This guide will help you set up Visual Studio Code (VSCode) to connect to your running Docker container. This will allow you to edit and execute code inside the container seamlessly.
 
 ---
 
-## Prerequisites
+# Prerequisites
 
 Before you begin, ensure that you have:
 
-1. **VSCode** installed on your computer.
+1. A **running Docker container** with SSH enabled.
+
+   - Follow the steps in "Start the class Docker container"
+
+2. **VSCode** installed on your computer.
 
    - Download it from [Visual Studio Code](https://code.visualstudio.com/).
    - Install the "Remote - SSH" and "Remote - Containers" extensions from the Extensions Marketplace.
 
-2. A **running Docker container** with SSH enabled.
-
-   - Follow the steps in the "Start the class Docker container" guide to set up and start the container.
+---
 
 ![](../../img/vscode-1.png)
 
 ---
 
-## Connect using the Remote - Containers Extension
+# Connect using the Remote - Containers Extension
 
 You can use the "Remote - Containers" extension to connect directly to the running container:
 
@@ -31,11 +55,19 @@ You can use the "Remote - Containers" extension to connect directly to the runni
    - Type `Remote-Containers: Attach to Running Container` and select it.
    - Choose `class-container` from the list.
 
+---
+
 ![](../../img/vscode-2.png)
 
-A new window will pop up with a different message in the bottom left.
+---
+
+A window will pop up with a different message in the bottom left.
 
 ![](../../img/vscode-3.png)
+
+---
+
+# Connect using the Remote - Containers Extension
 
 2. **Open the workspace**:
 
@@ -43,13 +75,17 @@ A new window will pop up with a different message in the bottom left.
    - You can now edit, debug, and execute code directly inside the container.
    - You will have to install other extensions as needed, such as the Python one and the Jupyter one.
 
+---
+
 ![](../../img/vscode-4.png)
+
+---
 
 ![](../../img/vscode-5.png)
 
 ---
 
-## Test your setup
+# Test your setup
 
 1. **Create a Python file**:
 
@@ -70,7 +106,7 @@ A new window will pop up with a different message in the bottom left.
 
 ---
 
-## Troubleshooting
+# Troubleshooting
 
 1. **No container found**:
 
@@ -91,13 +127,7 @@ A new window will pop up with a different message in the bottom left.
 
 ---
 
-## Summary
+# Summary
 
 This setup allows you to use a full-featured development environment while keeping your code and dependencies isolated in a container.
-
----
-
-Previous: [Start the class Docker container](002-start-the-class-container.md)
-
-Next: [What are SSH keys?](004-ssh-keys.md)
 
