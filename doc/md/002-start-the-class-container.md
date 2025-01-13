@@ -19,18 +19,18 @@ Before you begin, make sure you have:
    - Save the following content into a file named `Dockerfile` in a new directory on your computer:
 
    ```dockerfile
-   FROM ubuntu:24.04
-   ENV DEBIAN_FRONTEND=noninteractive
-   RUN apt-get update && apt-get install -y \
-       --no-install-recommends \
-       python3=3.12.3-0ubuntu2 \
-       python3-pip=24.0+dfsg-1ubuntu1.1 \
-       bash=5.2.21-2ubuntu4 \
-       openssh-server=1:9.6p1-3ubuntu13.5
-   RUN mkdir /var/run/sshd && \
-       echo 'root:rootpassword' | chpasswd
-   EXPOSE 22
-   CMD ["/usr/sbin/sshd", "-D"]
+FROM ubuntu:24.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y \
+    --no-install-recommends \
+    python3=3.12.3-0ubuntu2 \
+    python3-pip=24.0+dfsg-1ubuntu1.1 \
+    bash=5.2.21-2ubuntu4 \
+    openssh-server=1:9.6p1-3ubuntu13.5
+RUN mkdir /var/run/sshd && \
+    echo 'root:rootpassword' | chpasswd
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
    ```
 
 ---
@@ -67,7 +67,7 @@ Before you begin, make sure you have:
 
 ![](../../img/docker-desktop-3.png)
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Setting a Volume is important because only files stored in that directory will survive if the container is destroyed!
 
 2. Alternatively, you can **use the terminal** to run the container:
@@ -129,18 +129,6 @@ Or, in the terminal:
   ```bash
   docker start class-container
   ```
-
----
-
-## Troubleshooting
-
-1. **Docker Desktop not running**:
-   - Ensure Docker Desktop is open and the engine is running.
-2. **Port conflicts**:
-   - If port `2222` is already in use, choose a different port (e.g., `2233`) when running the container.
-3. **SSH connection fails**:
-   - Check that the container is running.
-   - Verify the port mapping in Docker Desktop.
 
 ---
 
