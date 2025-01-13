@@ -1,12 +1,13 @@
-
 ---
 title: "Tools of the trade III"
 author: "Joachim Vandekerckhove"
-date: "Winter 2025"
+date: today
+date-format: "[Winter] YYYY"
 output:
   beamer_presentation:
     theme: "metropolis"
     incremental: true
+    aspectratio: 169
 
 ---
 

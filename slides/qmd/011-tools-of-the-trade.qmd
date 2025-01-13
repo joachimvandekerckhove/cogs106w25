@@ -1,12 +1,13 @@
-
 ---
 title: "Tools of the trade I"
 author: "Joachim Vandekerckhove"
-date: "Winter 2025"
+date: today
+date-format: "[Winter] YYYY"
 output:
   beamer_presentation:
     theme: "metropolis"
     incremental: true
+    aspectratio: 169
 
 ---
 
@@ -49,7 +50,7 @@ You can think of a container a little bit like a parasite that lives inside anot
 
 \pause
 
-Below, we will also talk about the **image**, which something like a template to make a kind of container.  We can have many images, and each image can spawn many containers.  Usually, it's the image we will share to others.
+Below, we will also talk about the **image**, which something like a template to make a kind of container.  We can have many images, and each image can spawn many containers.  Often, it's the image we will share to others.
 
 ---
 
@@ -163,8 +164,8 @@ Docker Desktop is a tool that makes it easy to create, share, and run containers
 - **For this class**: You can run the same programming environment as I do so my examples will work on your computer and your assignments will work on mine.
 - **For students**: You can simulate a computer and if you mess it up you can just start over.
 - **For teams**: Everyone works with the same tools, avoiding conflicts.
-- **For sharing**: You can send a container to someone, and it will just work.
-- **For researchers**: Reviewers and readers can download your Docker container and repeat your analyses.
+- **For sharing**: You can send a image to someone, and it will just work.
+- **For researchers**: Reviewers and readers can download your Docker image and repeat your analyses.
 
 ---
 

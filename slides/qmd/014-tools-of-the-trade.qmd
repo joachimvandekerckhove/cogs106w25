@@ -1,15 +1,13 @@
-
 ---
 title: "Tools of the trade IV"
 author: "Joachim Vandekerckhove"
-date: "Winter 2025"
+date: today
+date-format: "[Winter] YYYY"
 output:
   beamer_presentation:
     theme: "metropolis"
     incremental: true
-    highlight: github
-    code-block-bg: "#f8f8f1"
-    code-block-border-left: "#245ABE"
+    aspectratio: 169
 
 ---
 
