@@ -18,7 +18,7 @@ Before you begin, make sure you have:
 2. **The Dockerfile** provided for the class.
    - Save the following content into a file named `Dockerfile` in a new directory on your computer:
 
-   ```dockerfile
+```dockerfile
 FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
@@ -31,7 +31,7 @@ RUN mkdir /var/run/sshd && \
     echo 'root:rootpassword' | chpasswd
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
-   ```
+```
 
 ---
 
