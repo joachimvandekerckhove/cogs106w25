@@ -39,8 +39,9 @@ Commands to manage files and directories:
   rm file.txt
   rm -r directory  # Remove a directory and its contents, -r for recursive
   ```
-  :warning: **The command line is a harsh and unforgiving environment. File deletion is immediate and permanent**
-  
+> [!IMPORTANT]
+> The command line is a harsh and unforgiving environment. File deletion is immediate and permanent!
+ 
 - **`cp`**: Copy files or directories.
   
   ```bash
@@ -54,7 +55,9 @@ Commands to manage files and directories:
   mv file.txt /new/location/
   ```
 
-:warning: **The `cp` and `mv` commands can overwrite files immediately and permanently**
+> [!IMPORTANT]
+> The `cp` and `mv` commands can overwrite files immediately and permanently!
+
 - Always double-check the source and destination paths.
 - Use the `-i` option (interactive) to confirm overwrites before proceeding:
   ```bash
