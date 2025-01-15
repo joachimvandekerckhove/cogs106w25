@@ -211,7 +211,8 @@ Automating tasks with `cron`:
 - **`crontab -e`**: Edit the crontab file to schedule tasks.
   ```bash
   # Example crontab entry
-  0 5 * * * /path/to/script.sh  # Run daily at 5 AM
+  # m h  dom mon dow   command
+    0 5   *   *   *   /path/to/script.sh  # Run daily at 5 AM
   ```
 - **`crontab -l`**: List current cron jobs.
   ```bash
