@@ -18,6 +18,10 @@ Commands to move around and explore the filesystem:
   ```bash
   cd /path/to/directory
   cd ..  # Move up one level
+  cd ../ # Equivalent
+  cd .   # "Move" to the current directory (i.e., do nothing)
+  cd ./  # Equivalent
+  cd ././././.  # Equivalent
   cd ~   # Move to home directory (also with no input argument)
   cd -   # Back to previous
   ```

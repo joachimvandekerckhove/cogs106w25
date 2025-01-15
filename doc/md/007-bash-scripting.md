@@ -1,6 +1,6 @@
 # Basic Scripting in Bash
 
-Bash scripting allows you to automate tasks and write powerful scripts using the Linux command line. Here's an introduction to basic Bash scripting concepts.
+Bash scripting allows you to automate tasks and write powerful scripts using the Linux command line.
 
 ## Creating and Running a Script
 
