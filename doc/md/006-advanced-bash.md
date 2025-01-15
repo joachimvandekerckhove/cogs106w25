@@ -26,6 +26,10 @@ Running commands with administrative privileges:
   ```bash
   sudo apt upgrade
   ```
+
+> [!TIP]
+> If you use a linux system, you should regularly update and upgrade for security.
+
 - **`apt install`**: Install a package.
   ```bash
   sudo apt install package_name
@@ -34,6 +38,9 @@ Running commands with administrative privileges:
   ```bash
   sudo apt remove package_name
   ```
+
+> [!WARNING]
+> There are very many packages that do important background stuff. Don't remove a package just because you don't recognize it.
 
 ### Snap
 - **`snap install`**: Install a Snap package.
