@@ -39,7 +39,7 @@ Commands to manage files and directories:
   rm file.txt
   rm -r directory  # Remove a directory and its contents, -r for recursive
   ```
-> [!IMPORTANT]
+> [!CAUTION]
 > The command line is a harsh and unforgiving environment. File deletion is immediate and permanent!
  
 - **`cp`**: Copy files or directories.
@@ -55,7 +55,7 @@ Commands to manage files and directories:
   mv file.txt /new/location/
   ```
 
-> [!IMPORTANT]
+> [!CAUTION]
 > The `cp` and `mv` commands can overwrite files immediately and permanently!
 
 - Always double-check the source and destination paths.
@@ -113,7 +113,9 @@ Use `chmod` to modify permissions:
 chmod 755 file.txt  # rwxr-xr-x
 chmod +x script.sh  # Add execute permission.  
 ```
-:information_source: By default, new scripts can't be run.
+
+> [!NOTE]
+> By default, new scripts can't be run.
 
 ### Changing Ownership
 Use `chown` to change file ownership:
