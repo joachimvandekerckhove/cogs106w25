@@ -10,7 +10,10 @@ Running commands with administrative privileges:
   sudo command
   sudo apt update
   ```
-  
+
+> [!CAUTION]
+> Superuser privileges are normally password protected because you can brick your system with them.
+
 ## Package Management (APT and Snap)
 
 ### APT
