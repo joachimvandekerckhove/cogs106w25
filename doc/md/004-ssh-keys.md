@@ -7,7 +7,7 @@ In the physical world, we keep things secure by using locks that are opened by k
 When working with GitHub (or any similar service), **SSH keys** work as follows:
 - Your **public key** is uploaded to GitHub.
 - Your **private key** stays on your computer or container.
-- When you try to connect to GitHub using your account, it will present you with the public key, your computer will then submit the private key, and GitHub will check if your private key matches the public key you shared. If they match, you’re allowed in.
+- When you try to connect to GitHub using your account, it will present you with a challenge that is encrypted using the public key. Your computer will then decrypt this using the private key, and GitHub will check if the challenge matches before you’re allowed in.
 
 SSH keys are both secure and convenient -- no need to enter a password every time you connect.
 
