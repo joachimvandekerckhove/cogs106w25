@@ -131,10 +131,18 @@ Much like writing style, you should adapt good coding practice and data manageme
 # Best practices for file structures
 There are some overarching ground rules to keep in mind before hacking away at your computer. They are:
 
-1. Do not modify your raw data ever for any reason.  Store them as read-only if you can.
-2. Data manipulation should work like an assembly line: it stops at checkpoints. E.g., it gets modified/cleaned/analyzed, and then it moves on.
+1. Do not modify your raw data ever for any reason.
+    - Store them as read-only if you can.
+2. Data manipulation should work like an assembly line: it stops at checkpoints.
+    - Data gets modified/cleaned/analyzed, and then it moves on to the next station.
 3. Code of different quality (scratch work vs. compiled binaries) should be separated.
-4. Always have collaborators in mind, even if there is a 0% chance of getting collaborators. Work towards shareable code. Have public awareness. In a way, imagine if your code were to be released on GitHub right now.
+    - When a script is completed and has done its job, _do not reuse the file name to do something else_.  Name it something useful and make a new file.
+
+---
+
+# Best practices for file structures
+4. Always have collaborators in mind, even if there is a 0% chance of getting collaborators. Work towards shareable code. Have public awareness.
+    - Imagine if your code were to be released on GitHub _right now._
 5. **Consistency (within your project) is key.**
 
 ---
