@@ -1,0 +1,99 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{metropolis}
+
+% Packages
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb, bm}
+\hypersetup{hidelinks}
+
+% Document Metadata
+\title{Introduction to the Bayes Factor}
+\author{Joachim Vandekerckhove}
+\date{Winter 2025}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{What is the Bayes Factor?}
+    \begin{itemize}
+        \item The Bayes factor (\( B \)) is a measure for comparing two models \( M_1 \) and \( M_2 \).
+        \item It quantifies how much more likely the data are under one model compared to the other:
+        \[
+            B = \frac{P(D \mid M_1)}{P(D \mid M_2)}
+        \]
+        \item If \( B > 1 \), evidence favors \( M_1 \); if \( B < 1 \), evidence favors \( M_2 \).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Binomial Model}
+    \begin{itemize}
+        \item Suppose we have data \( D = k \) successes in \( n \) trials, modeled as:
+        \[
+            k \sim \text{Binomial}(n, \theta)
+        \]
+        \item We compare two different prior beliefs about \( \theta \):
+        \begin{align*}
+            M_1: \quad & \theta \sim \text{Uniform}(0,1) \\
+            M_2: \quad & \theta \sim \text{Uniform}(0.2,0.8)
+        \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Computing the Marginal Likelihood}
+    \begin{itemize}
+        \item The marginal likelihood (evidence) for each model is:
+        \[
+            P(D \mid M) = \int_0^1 P(D \mid \theta) P(\theta \mid M) d\theta
+        \]
+        \item Evaluating this integral for both priors gives the model \emph{evidence}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Computing the Bayes Factor}
+    \begin{itemize}
+        \item Using the uniform priors in \( M_1 \) and \( M_2 \):
+        \begin{align*}
+            P(D \mid M_1) &= \int_0^1 P(D \mid \theta) P(\theta \mid M_1) d\theta \\
+                          &= \int_0^1 P(D \mid \theta) d\theta \\
+            P(D \mid M_2) &= \int_{0}^{1} P(D \mid \theta) P(\theta \mid M_2) d\theta \\
+                          &= 0.6\int_{0.2}^{0.8} P(D \mid \theta) d\theta
+        \end{align*}
+        \item The Bayes factor is:
+        \[
+            B = \frac{P(D \mid M_1)}{P(D \mid M_2)}
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Interpreting the Bayes Factor}
+    \begin{itemize}
+        \item \( B > 1 \): Evidence favors \( M_1 \) (the broader uniform prior model).
+        \item \( B < 1 \): Evidence favors \( M_2 \) (the restricted uniform prior model).
+        \item Strength of evidence (Jeffreys' scale):
+        \begin{table}
+        \begin{tabular}{ll}
+            \hline
+            \( B \) & Interpretation \\
+            \hline
+            1-3 & Weak evidence \\
+            3-10 & Moderate evidence \\
+            10+ & Strong evidence \\
+            \hline
+        \end{tabular}
+        \end{table}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusion}
+    \begin{itemize}
+        \item The Bayes factor provides a principled way to compare models.
+        \item Prior choices influence results but can be assessed quantitatively.
+        \item Useful for hypothesis testing and model selection in Bayesian inference.
+    \end{itemize}
+\end{frame}
+
+
+\maketitle
+
+\end{document}
