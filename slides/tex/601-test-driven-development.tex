@@ -1,0 +1,280 @@
+\documentclass{beamer}
+
+\usepackage{amsmath}
+
+\usetheme{metropolis}
+\usepackage{listings}
+
+\lstdefinestyle{Python}
+{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{blue}\ttfamily,
+	otherkeywords={self,False},
+    commentstyle=\color{green!60!black}\ttfamily,
+    stringstyle=\color{red!80!black}\ttfamily,
+    backgroundcolor=\color{blue!10!white},
+    showstringspaces=false,
+    numbers=none,
+    numberstyle=\tiny,
+    numbersep=5pt,
+    xleftmargin=2pt,
+    framexleftmargin=4pt,
+    framexrightmargin=4pt,
+    framexbottommargin=5pt,
+    framextopmargin=5pt,
+    %breaklines=true,
+    captionpos=b
+}
+
+\lstdefinestyle{MATLAB}{
+    language=MATLAB,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red!80!black}\ttfamily,
+    commentstyle=\color{green!60!black}\ttfamily,
+    numbers=none,
+    backgroundcolor=\color{orange!15!white},
+    showstringspaces=false,
+    numbers=none,
+    numberstyle=\tiny,
+    numbersep=5pt,
+    xleftmargin=2pt,
+    framexleftmargin=4pt,
+    framexrightmargin=4pt,
+    framexbottommargin=5pt,
+    framextopmargin=5pt,
+    %breaklines=true,
+    captionpos=b
+}
+
+\renewcommand{\emph}[1]{{\color{red}#1}}
+
+\beamerdefaultoverlayspecification{<+->}
+
+\setbeamercolor{block body}{bg=mDarkTeal!30}
+\setbeamercolor{block title}{bg=mDarkTeal,fg=black!2}
+
+\title{Test-Driven Development}
+\author{Joachim Vandekerckhove}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Test-driven development}
+
+\frame{
+  \frametitle{What is test-driven development (TDD)?}
+  TDD is a software development methodology where tests are written for a feature before writing the code for that feature.
+
+  \pause
+  
+  Yes that sounds weird, but let's give the computer scientists some credit.  We actually do it all the time intuitively.
+
+}
+
+\frame{
+  \frametitle{Steps of TDD}
+  \begin{itemize}
+    \item[1.] Write a failing test.
+    \item[] The test fails because the code it tests doesn't exist yet or it is not implemented yet.
+    \item[2.] Write just enough code to make the test pass.
+    \item[] Write the minimum amount of code necessary to pass the test. Don't add any additional features or improvements.
+    \item[3.] Refactor the code as needed.
+    \item[] Improve design, implementation, maintainability, \emph{all the while constantly testing} to make sure that all tests still pass.
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Two kinds of tests}
+  
+  By writing tests first and then writing the code to make the tests pass, you get better code quality, improved bug detection, and a more enjoyable development experience.
+  
+  \pause\vspace{2ex}
+
+  \begin{block}{Unit tests}
+  Tests individual pieces of code, such as functions or methods, in isolation.
+  \end{block}
+  \begin{block}{Integration tests}
+  Tests how multiple pieces of code work together.
+  \end{block}
+}
+
+
+
+
+\begin{frame}
+\frametitle{TDD in practice: An example}
+\begin{itemize}
+\item Consider a simple example of a function that performs a statistical calculation (e.g., linear regression).
+\item Before writing any production code, write test cases that test the expected behavior of the function
+\begin{itemize}
+\item Function gives correct output with known inputs.
+\item Function correctly verifies input (throwing errors for bad input is desirable behavior!)
+\end{itemize}
+\item Write the function, making sure it passes all the test cases.
+\item Refactor the code as needed, making sure all tests still pass.
+\item Repeat the process for any additional features or bug fixes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Benefits of TDD}
+\begin{itemize}
+\item TDD helps to ensure code correctness and reduce the number of bugs.
+\item It makes it easier to make changes to code and add new features, as any breaking changes will be caught by the tests.
+\item TDD improves code maintainability by providing a clear and complete set of tests for the code.
+\item It also helps to improve the development process by making it more incremental and iterative, allowing for a faster development cycle.
+\end{itemize}
+\end{frame}
+
+
+\section{Cognitive modeling is TTD}
+
+\begin{frame}
+\frametitle{TDD in cognitive model development}
+\begin{itemize}
+\item Cognitive modeling is amateur software development.
+\item Like any software development, it benefits from TDD.
+\item Tests verify correctness of a model's predictions and behavior.
+\item Once TDD is implemented, we can go through rapid cycles of model development:
+\begin{itemize}
+\item Make it easier to make changes or add new features (to the \emph{cognitive model}, not just software).
+\item Ensure the reliability and robustness of a model.
+\item Continuous testing cycles facilitate rapid model development.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{TDD in cognitive model development}
+Examples of tests for a cognitive model could include: 
+     \begin{itemize}
+     \item Comparison of model predictions against observed data: does the model (still) fit?  Does it now fit better, or worse?
+     \item Comparison of model predictions against common sense.
+     \item Testing the model's robustness when we change...
+     \begin{itemize}
+     \item independent variables
+     \item dependent variables
+     \item convenience assumptions we may have made
+     \item structural relationships within the model
+     \item add entirely new features
+     \item ...
+     \end{itemize}
+     \item Often the test can be evaluated informally (e.g., looking at a figure of model vs.\ data), but ideally it is automated.
+  \end{itemize}
+
+\end{frame}
+
+
+\section{TDD workflow}
+
+\begin{frame}
+\frametitle{TDD workflow start}
+\begin{enumerate}
+\item \textbf{Write a test:} Write a test that defines a desired behavior or feature of the code you are developing.
+\item \textbf{Watch it fail:} Run the test and see that it fails, as the desired behavior or feature has not been implemented yet.
+\item \textbf{Write the code:} Write the minimum amount of code needed to make the test pass.
+\item \textbf{Watch it pass:} Run the test and see that it passes, as the desired behavior or feature has now been implemented.
+\item \textbf{Refactor:} Refactor the code as needed, making sure all tests continue to pass.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{TDD workflow continue}
+\begin{enumerate}
+\item[6.] \textbf{Repeat the process:} Repeat the process of adding a test, running all tests, writing the code, running all tests, and refactoring as needed for each desired behavior or feature.
+\item[7.] \textbf{Continuously verify:} Continuously verify the correctness of the code through the tests.
+\item[8.] \textbf{Maintaining a test suite:} Maintaining a comprehensive test suite that covers all desired behaviors and features of the code.
+\end{enumerate}
+\end{frame}
+
+
+\section{Unit tests}
+
+\begin{frame}[fragile]
+  \frametitle{Unit tests in Python}
+  \begin{lstlisting}[style=Python]
+import unittest
+
+class TestStringMethods(unittest.TestCase):  
+    def test_upper(self):
+        self.assertEqual('foo'.upper(), 'FOO')
+    def test_isupper(self):
+        self.assertTrue('FOO'.isupper())
+        self.assertFalse('Foo'.isupper())
+    def test_split(self):
+        s = 'hello world'
+        self.assertEqual(s.split(), ['hello', 'world'])
+        with self.assertRaises(TypeError):
+            s.split(2)
+            
+  \end{lstlisting}\pause
+  
+  \begin{lstlisting}[style=Python]
+# Run the tests
+if __name__ == '__main__':
+    unittest.main()
+  \end{lstlisting}
+
+\vspace{-1ex}
+
+  \begin{lstlisting}[style=Python]
+# If using jupyter...
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+  \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Unit tests in Python}
+  More on unit tests in Python via DigitalOcean: 
+  
+  https://www.digitalocean.com/community/tutorials/how-to-use-unittest-to-write-a-test-case-for-a-function-in-python
+\end{frame}
+
+
+
+\section{An applied example}
+
+\begin{frame}
+\frametitle{Bayes factor for binomial data}
+
+\begin{itemize}
+\item Let's consider a binomial experiment with $n$ trials and $k$ successes.
+\item Let's denote the success probability by $\theta$.
+\item We have two competing models that differ in their prior distributions for $\theta$:
+\begin{itemize}
+\item The "slab" prior: $\theta \sim U(0, 1)$
+\item The "spike" prior: $\theta \sim U(0.45, 0.55)$
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Bayes factor for binomial data}
+
+\begin{itemize}
+\item The posterior distributions given the data can be found as:
+\begin{align*}
+p(\theta|k) &\propto p(k|\theta)p(\theta) \\
+p(\theta|k, \text{slab}) &\propto \binom{n}{k} \theta^k (1 - \theta)^{n-k} \times U\left(\theta |0, 1\right) \\
+p(\theta|k, \text{spike}) &\propto \binom{n}{k} \theta^k (1 - \theta)^{n-k} \times U\left(\theta |0.45, 0.55\right)
+\end{align*}
+\item The Bayes factor for comparing the two models can be calculated as:
+\begin{align*}
+B &= \frac{p(k|\text{spike})}{p(k|\text{slab})} \\
+&= \frac{\int_{0.45}^{0.55} \binom{n}{k} \theta^k (1 - \theta)^{n-k} d\theta}{\int_{0}^{1} \binom{n}{k} \theta^k (1 - \theta)^{n-k} d\theta}
+\end{align*}
+\end{itemize}
+
+\end{frame}
+
+
+\end{document}
