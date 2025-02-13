@@ -1,0 +1,651 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\usepackage{listings}
+
+\usepackage[dvipsnames]{xcolor}
+
+% Define colors based on a typical Cobalt scheme
+\definecolor{cobaltbg}{HTML}{002240}       % Dark blue background
+\definecolor{cobaltfg}{HTML}{ffffff}       % White foreground
+\definecolor{cobaltKeyword}{HTML}{569cd6}   % Light blue for keywords
+\definecolor{cobaltString}{HTML}{ce9178}    % Reddish for strings
+\definecolor{cobaltComment}{HTML}{6a9955}   % Greenish for comments
+
+\definecolor{emphasis}{HTML}{ff77cc}
+\definecolor{footnote}{HTML}{569cd6}
+
+\lstdefinestyle{Python}{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize\color{cobaltfg},
+    keywordstyle=\color{cobaltKeyword}\ttfamily,
+    otherkeywords={self,False},
+    commentstyle=\color{cobaltComment}\ttfamily,
+    stringstyle=\color{cobaltString}\ttfamily,
+    backgroundcolor=\color{cobaltbg},
+    showstringspaces=false,
+    numbers=none,
+    numberstyle=\tiny,
+    numbersep=5pt,
+    xleftmargin=2pt,
+    framexleftmargin=4pt,
+    framexrightmargin=4pt,
+    framexbottommargin=5pt,
+    framextopmargin=5pt,
+    captionpos=b
+}
+
+\usetheme{metropolis}
+
+
+\renewcommand{\emph}[1]{{\color{magenta}#1}}
+\newcommand{\fn}[1]{%
+  \item[] \scriptsize\color{footnote}{#1}
+}
+
+\beamerdefaultoverlayspecification{<+->}
+
+\metroset{numbering=fraction}
+\metroset{progressbar=frametitle}
+\metroset{background=dark}
+
+\setbeamercolor{palette primary}{bg=black,fg=white}
+\setbeamercolor{background canvas}{parent=palette primary}
+\setbeamercolor{normal text}{fg=white}
+\setbeamercolor{progress bar}{use=palette primary,fg=emphasis}
+
+\hypersetup{
+    colorlinks = true,
+    linkcolor = magenta,
+    linkbordercolor = white,
+    pdfborderstyle = {/S/U/W 1}
+}
+
+
+\title{Protecting Research Integrity with Secure Data and Communication Practices}
+\date{}
+
+\begin{document}
+
+% Title Slide
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% -----------------------------------------------------------
+% Section: Relevance of Data Privacy for Cognitive Scientists
+% -----------------------------------------------------------
+%\section{Relevance of Data Privacy for Cognitive Scientists}
+
+\begin{frame}{Why Data Privacy Matters}
+\pause
+  \begin{itemize}
+    \item Behavioral research often involves private data and even experimental results can be highly sensitive
+    \item Even seemingly innocuous data can be a tool of abuse
+    \begin{itemize}
+      \item[--] an employer might take adverse action against an employee based on their scores in an implicit bias test, or responses to a survey on political attitudes, or sexual preference, or ...
+    \end{itemize}
+    \item Data privacy can be a matter of life and death
+    \begin{itemize}
+      \item[--] imagine that your research subjects are domestic abuse victims, or undocumented residents, or political dissidents, or mafia informants, or ...
+    \end{itemize}
+    \item With most data stored and transmitted digitally, researchers should take security measures proactively
+  \end{itemize}
+
+\end{frame}
+
+
+\section{Data privacy}
+
+\begin{frame}{Why Data Privacy Matters}
+\begin{quote}
+Psychologists have a primary obligation and take reasonable precautions to protect confidential information obtained through or stored in any medium, recognizing that the extent and limits of confidentiality may be regulated by law or established by institutional rules or professional or scientific relationship.
+\end{quote}
+\flushright{\footnotesize{--- APA Standard 4.01 (``Maintaining Confidentiality'')}}
+\end{frame}
+
+
+\begin{frame}{Why Data Privacy Matters}
+  \begin{itemize}
+    \item  Data privacy obligations are both legal and ethical, but also practical:
+      \begin{itemize}
+        \item[--] secure practices build trust with participants, collaborators, and funding agencies, and other stakeholders
+      \end{itemize}
+    \item Ethical and practical considerations go far beyond legal obligation!
+      \begin{itemize}
+        \item[--] it is possible to follow the law perfectly and still run the risk of inviting harassment of research subjects, or embarrassing yourself, your colleagues, your participants, your employer ...
+        \item[--] most employers will help you follow the law
+      \end{itemize}
+    \fn{For further insights, see the \href{https://www.eff.org/issues/privacy}{EFF Privacy page} and \href{https://www.privacytools.io/}{Privacy Tools}.}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Deidentification of Human Subjects Data}
+  \begin{itemize}
+    \item By law, we must protect participant privacy (HIPAA, GDPR)
+    \item But we are also expected to share and publish research data
+    \item Standard data preprocessing includes \emph{deidentification}:  
+      \begin{itemize}
+        \item[--] remove identifiers (names, social security numbers, phone numbers, etc.)
+        \item[--] pseudonymization, data masking (synthetic or `notional' data)
+        \item[--] unlink and aggregate data when possible
+      \end{itemize}
+    \item There is often a residual risk of re-identification (especially with multidimensional, linked data)
+    \item  There exist established guidelines (e.g., from HHS)
+    \fn{See: \href{https://www.hhs.gov/hipaa/for-professionals/privacy/special-topics/de-identification/index.html}{HIPAA De-identification Guidelines}}
+  \end{itemize}
+\end{frame}
+
+
+\section{Threat model approach}
+
+\begin{frame}{Threat Model Approach}
+Once again I believe that computer science holds relevant lessons for practical cognitive science.\pause
+  \begin{itemize}
+    \item Cybersecurity involves \emph{threat model analysis}
+      \begin{itemize}
+        \item[--] structured way to identify and mitigate potential security risks
+        \item[--] carefully consider who might try to access your data and why
+      \end{itemize}
+    \item Basic threat models:
+      \begin{itemize}
+        \item[--] {insider threats:} actions by trusted individuals
+        \item[--] {external threats:} hackers, adversaries, state-sponsored entities
+        \item[--] {accidental exposure:} misconfigurations, inadvertent data leaks
+      \end{itemize}
+     \item Goal is to \emph{assess impact and likelihood of potential attack vectors} and \emph{tailor security policies} based on your threat profile
+    \fn{For more details, see the \href{https://www.nist.gov/publications/threat-modeling-security-critical-systems}{NIST Threat Modeling Guidelines}.}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Threat Model Analysis: An Abstract Overview}\pause
+  \begin{enumerate}
+    \item Identify \emph{assets}
+      \begin{itemize}
+        \item What valuable information or resources need protection?
+        \item[] Sensitive data, intellectual property, personal identities...
+      \end{itemize}
+    \item Identify \emph{potential adversaries}
+      \begin{itemize}
+        \item Who might target your assets?
+        \item[] External attackers, insiders, or opportunistic threats.
+      \end{itemize}
+    \item Determine \emph{threat vectors}
+      \begin{itemize}
+        \item How could adversaries attack?
+        \item[] Look at digital channels (e.g., network intrusions) and physical or social channels (e.g., social engineering).
+      \end{itemize}
+    \item Assess \emph{impact} and \emph{likelihood}
+      \begin{itemize}
+        \item How severe is a potential breach and how likely is it?
+        \item[] E.g., how skilled are the adversaries?
+      \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+
+
+\begin{frame}{Threat Model Analysis: An Abstract Overview}
+  \begin{enumerate}
+  \setcounter{enumi}{4}
+    \item Evaluate \emph{vulnerabilities}
+      \begin{itemize}
+        \item Where are the weak points?
+        \item[] Assess system weaknesses, communication channels, and human factors.
+      \end{itemize}
+    \item Develop \emph{mitigation strategies}
+      \begin{itemize}
+        \item What measures can reduce risk?
+        \item[] Consider encryption, access controls, secure practices, and training.
+      \end{itemize}
+    \item Frequently \emph{iterate} and \emph{update}
+      \begin{itemize}
+        \item Regularly revisit your threat model as conditions change.
+      \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Threat Model Analysis: An Abstract Overview}
+    Let's consider two cognitive scientists:\pause
+    \begin{itemize}
+      \item Ash is a researcher at the NIJ who studies mafia informants.
+      \item Blake is a researcher at the ACLU who corresponds with dissidents in an autocratic foreign regime.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Threat Model: Studying Mafia Informants}
+  \begin{itemize}
+    \item[] \textbf{Assets}
+      \begin{itemize}
+        \item \textit{Research Data:} Sensitive documents, interview recordings, and field notes.
+        \item \textit{Informant Anonymity:} Identities and contact details of sources.
+        \item \textit{Personal Safety \& Reputation:} The researcher’s well-being and academic credibility.
+      \end{itemize}
+    \item[] \textbf{Adversaries}
+      \begin{itemize}
+        \item \textit{Criminal Organizations:} Mafia groups aiming to suppress negative information and to identify informants.
+        \item \textit{Corrupt Actors:} Individuals within law enforcement with ties to organized crime.
+        \item \textit{Insider Threats:} Untrusted collaborators or assistants.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Threat Model: Studying Mafia Informants}
+  \begin{itemize}
+    \item[] \textbf{Threat vectors}
+      \begin{itemize}
+        \item Digital surveillance (hacking emails, cloud storage, etc.)
+        \item Physical intrusion (unauthorized access to devices or facilities)
+        \item Social engineering (coercion or manipulation)
+      \end{itemize}
+    \item[] \textbf{Vulnerabilities}
+      \begin{itemize}
+        \item Insecure communications (lack of encryption)
+        \item Data storage risks (unencrypted local storage)
+        \item Operational security gaps (lack of staff cybersecurity training; failure to deidentify informant data)
+      \end{itemize}
+    \item[] \textbf{Mitigations}
+      \begin{itemize}
+        \item Use robust encryption (for communications and data storage)
+        \item Strong deidentification and pseudonymization procedures
+        \item Enforce staff training in operational security (OpSec)
+        \item Limit access to sensitive data on a need-to-know basis
+        \item Does the data need to be transmitted at all?
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Threat Model: Studying Mafia Informants}
+  \begin{itemize}
+    \item[] \textbf{Encryption tools}
+      \begin{itemize}
+        \item \href{https://gnupg.org/}{GnuPG/PGP} for secure email and file encryption.
+        \item \href{https://www.veracrypt.fr/en/Home.html}{VeraCrypt} for full-disk or volume encryption.
+        \item \href{https://cryptography.io/en/latest/}{Python cryptography library} for custom data encryption.
+      \end{itemize}
+    \item[] \textbf{Secure communications}
+      \begin{itemize}
+        \item \href{https://signal.org/}{Signal} for end-to-end encrypted messaging.
+        \item \href{https://protonmail.com/}{ProtonMail} for secure, encrypted email.
+        \item Use encrypted collaboration platforms such as \href{https://wire.com/en/}{Wire}.
+      \end{itemize}
+  \end{itemize}
+
+  \pause
+  There's really no reason you couldn't use all of these tools routinely. They work! ChatGPT will tell you how to install them.
+\end{frame}
+
+
+\begin{frame}{Threat Model: Studying Mafia Informants}
+  \begin{itemize}
+    \item[] \textbf{Network and data security}
+      \begin{itemize}
+        \item Use reputable VPN services (e.g., \href{https://nordvpn.com}{NordVPN}, \href{https://protonvpn.com/}{ProtonVPN}, \href{https://www.expressvpn.com/}{ExpressVPN}) to secure internet traffic.
+        \item Run DNS leak tests with services like \href{https://www.dnsleaktest.com}{dnsleaktest.com}.
+        \item Use secure cloud storage options such as \href{https://spideroak.com/}{SpiderOak} or \href{https://tresorit.com/}{Tresorit}.
+      \end{itemize}
+    \item[] \textbf{Operational security}
+      \begin{itemize}
+        \item Enforce two-factor authentication (2FA) using tools like \href{https://authy.com/}{Authy} or Google Authenticator.
+        \item Staff cybersecurity training and phishing awareness sessions.
+        \item Role-based access control and strict data access policies.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Threat Model: Corresponding with Dissidents}
+  \begin{itemize}
+    \item[] \textbf{Assets}
+      \begin{itemize}
+        \item \textit{Confidential Communications:} Secure emails, messages, and correspondence between the researcher and revolutionaries.
+        \item \textit{Sensitive Research Data:} Reports, documents, and analyses containing politically sensitive or classified information.
+        \item \textit{Reputational Integrity:} The credibility and professional standing of the researcher.
+        \item \textit{Safety of Correspondents:} The anonymity and security of revolutionary contacts, whose exposure could lead to severe repercussions.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Threat Model: Corresponding with Dissidents}
+  \begin{itemize}
+    \item[] \textbf{Adversaries}
+      \begin{itemize}
+        \item \textit{Autocratic Regime Security Forces:} Government agencies and intelligence services actively surveilling dissent.
+        \item \textit{Foreign Cyber and Physical Threat Actors:} Entities intent on suppressing political opposition or compromising secure networks.
+        \item \textit{Malicious Insiders:} Individuals within the communication or data storage chain who may leak sensitive information.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Threat Model: Corresponding with Dissidents}
+  \begin{itemize}
+    \item[]\textbf{Threat vectors}
+      \begin{itemize}
+        \item Digital surveillance and interception of communications.
+        \item Cyberattacks (phishing, malware, hacking) targeting communication platforms.
+        \item Insider compromise, where trusted parties inadvertently or maliciously leak information.
+      \end{itemize}
+    \item[] \textbf{Vulnerabilities}
+      \begin{itemize}
+        \item Use of insecure or outdated communication channels/devices.
+        \item Weak operational security (OpSec) practices.
+        \item Metadata exposure even when content is encrypted.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Threat Model: Corresponding with Dissidents}
+  \begin{itemize}
+    \item[] \textbf{Mitigations}
+      \begin{itemize}
+        \item End-to-end encryption for all communications (e.g., Signal).
+        \item Use VPNs, Tor, or other anonymizing tools to obscure IP addresses and metadata.
+        \item Regularly update software, use secure devices, and compartmentalize sensitive data.
+        \item Enforce data access controls and adopt OpSec training.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Threat Model: Corresponding with Dissidents}
+  \begin{itemize}
+    \item[] \textbf{Mitigations}
+      \begin{itemize}
+        \item Encourage vulnerable subjects to employ digital countersurveillance techniques like \emph{dedicated devices}:
+        \begin{itemize}
+\item[--] Use a \emph{burner} device for sensitive communications (e.g., encrypted messaging, accessing secure email) and a different device for everyday use. If the everyday device is compromised, the sensitive device remains insulated.
+        \end{itemize}
+        \item ... or \emph{dual-purpose setups}:
+        \begin{itemize}
+\item[--] Run a secure \emph{virtual machine} (with hardened security settings) on a host that is used for general tasks. Sensitive operations are performed in a controlled, isolated environment.
+\item[--] \emph{Docker containers} are ideal burners: cheap and high-quality.
+        \end{itemize}
+      \end{itemize}
+  \end{itemize}
+  
+  
+\end{frame}
+
+
+% -----------------------------------------------------------
+% Section 1: Secure Messaging with Signal
+% -----------------------------------------------------------
+
+\section{Encryption}
+
+\begin{frame}{Secure Messaging}\pause
+  Protecting the anonymity of sources is only sometimes a matter of law but an obvious practical concern if the source may suffer adverse consequences from working with you.
+\end{frame}
+
+\begin{frame}{Secure Messaging with Signal}
+  \begin{itemize}
+    \item[] \textbf{End-to-end encryption} 
+    \begin{itemize}
+    \item E.g., ``Signal Protocol'' ensures that only the communicating devices can read the messages.
+    \item Protects against interception and impersonation in the data stream, but of course either device can be compromised.
+    \end{itemize}
+    \item[] \textbf{Open-source \& audited}
+    \begin{itemize}
+    \item Code is publicly available and regularly reviewed by security experts.
+    \end{itemize}
+    \item[] \textbf{Minimal metadata} 
+    \begin{itemize}
+      \item Designed to retain as little information as possible about your communications.
+      \item Even minimal metadata (e.g., ``$A$ sent something to $B$ at time~$t$'') can be harmful.
+    \end{itemize}
+    \fn{Learn more: \href{https://signal.org/}{Signal Official Website} \quad|\quad \href{https://signal.org/docs/}{Signal Security Overview}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Using and Evaluating Secure Messaging Software}\pause
+  \begin{itemize}
+    \item[] \textbf{Evaluating security}
+      \begin{itemize}
+        \item Look for independent audits and open-source transparency.
+        \item Confirm that the app uses modern encryption standards (e.g., forward secrecy).
+        \item Find reviews by trustworthy independent organizations such as the Electronic Frontier Foundation.
+      \end{itemize}
+    \fn{Additional reading: \href{https://www.eff.org/deeplinks/2016/06/how-secure-your-messages}{EFF on Secure Messaging}}
+  \end{itemize}
+\end{frame}
+
+
+
+
+% -----------------------------------------------------------
+% Section 2: VPNs and Tor
+% -----------------------------------------------------------
+
+\begin{frame}{Secure Traffic}\pause
+  \begin{itemize}
+    \item[] \textbf{Public networks}
+      \begin{itemize}
+        \item Typically found in places like cafes, airports, hotels, and university campuses.
+        \item Often unencrypted or poorly secured.
+        \item Vulnerable to eavesdropping and man-in-the-middle attacks.
+      \end{itemize}
+    \item[] \textbf{Secured networks}
+      \begin{itemize}
+        \item Encrypted and controlled environments (e.g., corporate networks, VPN-secured connections).
+        \item Provide stronger protection against external threats.
+      \end{itemize}
+    \item[] \textbf{Best practices}
+      \begin{itemize}
+        \item Use VPNs on public networks.
+        \item Avoid accessing sensitive information on untrusted networks.
+      \end{itemize}
+    \fn{For more information, see: \href{https://www.us-cert.gov/ncas/tips/ST04-002}{US-CERT: Protecting Yourself on Public Wi-Fi}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Virtual Private Networks (VPNs)}
+  \begin{itemize}
+    \item[] \textbf{What is a VPN?}
+      \begin{itemize}
+        \item Encrypts your internet traffic and hides your IP address.
+        \item Creates a secure tunnel between your device and a VPN server.
+        \item You can buy access to a VPN or set up your own.
+        \item The free ones are not safe.
+      \end{itemize}
+    \item[] \textbf{Evaluating VPN providers}
+      \begin{itemize}
+        \item Look for a strict no-logs policy and independent audits.
+        \item Choose providers in jurisdictions with strong privacy laws.
+        \item Read transparency reports and user reviews.
+      \end{itemize}
+    \fn{Further details: \href{https://www.privacytools.io/providers/vpn/}{Privacy Tools VPN Guide}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Confirming Your Traffic is VPN Secured}
+  \begin{itemize}
+    \item[] \textbf{Check your public IP}
+      \begin{itemize}
+         \item Use a service like \href{https://www.whatismyip.com}{whatismyip.com} or \href{https://ifconfig.me}{ifconfig.me}.
+         \item Compare your IP before and after connecting to the VPN.
+      \end{itemize}
+    \item[] \textbf{Packet analysis}
+      \begin{itemize}
+         \item Tools like Wireshark can capture packets and confirm that data is encapsulated (encrypted) and not transmitted in plaintext.
+      \end{itemize}
+    \item[] \textbf{VPN client status:}
+      \begin{itemize}
+         \item Check the VPN client’s interface and logs to ensure the connection is active and using strong encryption protocols.
+      \end{itemize}
+    \fn{For more details, see the \href{https://www.privacytools.io/providers/vpn/}{PrivacyTools VPN Guide}.}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Tor: Enhancing Anonymity}
+  \begin{itemize}
+    \item[] \textbf{How Tor works}
+      \begin{itemize}
+        \item Routes your internet traffic through multiple relays.
+        \item Masks your originating IP address to provide anonymity.
+      \end{itemize}
+    \item[] \textbf{Using Tor}
+      \begin{itemize}
+        \item Download and use the official Tor Browser.
+        \item Be aware that Tor may slow down your connection and that exit nodes can be vulnerable.
+      \end{itemize}
+    \fn{Explore more: \href{https://www.torproject.org/}{Tor Project Official Site}}
+  \end{itemize}
+\end{frame}
+
+
+% -----------------------------------------------------------
+% Section 3: Python File Encryption Demo
+% -----------------------------------------------------------
+
+\begin{frame}{Encryption}
+\begin{itemize}
+\item We have previously discussed encryption using SSH keys for asymmetric security.
+\item This is useful for setting up persistent connections between two computers, but a bit cumbersome for encrypting data locally or sending encrypted data on a one-off basis.
+\item Sometimes you just want to encrypt a file with a key and keep the key somewhere safe, or give it to someone else.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Fernet Encryption}
+    \begin{itemize}
+      \item Fernet is a symmetric encryption scheme provided by the Python \texttt{cryptography} package.
+      \item Designed for ease of use, allowing non-experts to secure sensitive data.
+      \item Widely adopted in research and industry for protecting confidential information.
+      \item Helps ensure ethical data handling and compliance with privacy standards.
+	  \fn{For more details, see the \href{https://cryptography.io/en/latest/fernet/}{Fernet Documentation}.}
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Sender}
+\begin{lstlisting}[style=Python]
+from cryptography.fernet import Fernet
+
+# Sender: Data to be sent
+plaintext = "Confidential: Research subject data."
+
+# Generate symmetric key and encrypt the data
+key = Fernet.generate_key()
+cipher = Fernet(key)
+encrypted_data = cipher.encrypt(plaintext.encode())
+
+# Save encrypted data to file (simulate sending the file)
+with open("data.enc", "wb") as f:
+    f.write(encrypted_data)
+
+# Display the symmetric key to send securely
+print("Send this key to the receiver (on a secure channel):")
+print(key.decode())
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Receiver: Load Encrypted File}
+\begin{lstlisting}[style=Python]
+from cryptography.fernet import Fernet
+
+# Receiver: Read the encrypted file
+with open("data.enc", "rb") as f:
+    encrypted_data = f.read()
+
+# Receiver: Use the received key to decrypt
+# Paste the key received securely
+key = b"PASTE_KEY_HERE"
+cipher = Fernet(key)
+decrypted_data = cipher.decrypt(encrypted_data)
+print("Decrypted data:")
+print(decrypted_data.decode())
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Workflow Explanation and Takeaways}
+\begin{itemize}
+  \item The sender encrypts the data and saves it to \texttt{data.enc}.
+  \item The symmetric key is printed—this key must be shared securely with the receiver.
+  \item The receiver uses the key to decrypt the file, recovering the original data.
+  \fn{In practice, always share keys via secure channels (e.g., in-person, via secure messaging, etc.).}
+\end{itemize}
+\end{frame}
+
+% -----------------------------------------------------------
+% Section 4: General High-Level Advice
+% -----------------------------------------------------------
+\section{General High-Level Advice}
+
+\begin{frame}{Conclusion}
+\begin{itemize}
+  \item Professional cognitive scientists must at times consider the security and privacy of their digital practices. 
+  \begin{itemize}
+    \item[--] to protect subjects
+    \item[--] to protect employers
+    \item[--] to protect themselves
+  \end{itemize}
+  \item Cybersecurity is a mature field that is partly computer science and math, and partly psychology. 
+  \begin{itemize}
+    \item[--] there are many tools that enhance security and privacy
+    \item[--] their development is partly technical, but heavily focused on user adoption and retention
+    \item[--] OpSec is a behavioral concern
+    \item[--] knowing which tools are secure is a matter of trust (of the vendor, or the reviewer)
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusion}
+If online privacy is important to you:
+  \begin{itemize}
+    \item[] \textbf{Know \emph{nothing is 100\% secure}}
+      \begin{itemize}
+        \item Privacy risk cannot be eliminated, only mitigated
+        \item Anything stored or transmitted electronically may be vulnerable
+        \item If it really needs to be secret, \emph{you should not write it down}
+      \end{itemize}
+    \item[] \textbf{Layer your defenses}
+      \begin{itemize}
+        \item Use multiple security measures (encryption, secure messaging, VPNs, Tor, good OpSec, constant vigilance) to mitigate risk
+        \item Do not rely on security through obscurity
+        \item \emph{Kerkhoff's Principle}: ``Design your system assuming that your opponents know it in detail''
+      \end{itemize}
+    \item[] \textbf{Keep software up to date}
+      \begin{itemize}
+        \item Regularly update your operating systems and applications to patch known vulnerabilities.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusion}
+  \begin{itemize}
+    \item[] \textbf{Compartmentalize sensitive data}
+      \begin{itemize}
+        \item Separate sensitive information from routine work files.
+      \end{itemize}
+    \item[] \textbf{Secure your communications and online privacy}
+    \begin{itemize}
+    \item Use Signal for encrypted messaging.
+    \item Leverage VPNs and Tor for secure and anonymous browsing.
+    \end{itemize}
+    \item[] \textbf{Protect your files}
+    \begin{itemize}
+    \item Use simple, reproducible encryption methods (e.g., in Python).  
+    \item Encrypt entire drives (e.g., with VeraCrypt).
+    \item \emph{Do not invent your own}, you will lose every time.
+    \end{itemize}
+    \item[] \textbf{Cut luxuries} 
+    \begin{itemize}
+    \item Do your data need to be transmitted at all? (Not a lot beats an air gapped computer for network safety.)
+    \item Keep a small team to better control access.
+    \end{itemize}
+    \fn{Additional tips: \href{https://ssd.eff.org/}{EFF Security Self-Defense Guide}}
+  \end{itemize}
+\end{frame}
+
+\maketitle
+
+
+\end{document}
