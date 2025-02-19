@@ -1,0 +1,181 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{metropolis}
+
+% Packages
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb, bm, graphicx}
+\usepackage{xcolor}
+\hypersetup{hidelinks}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% Define blood red color and redefine emph
+\definecolor{bloodred}{HTML}{CC0000}
+\renewcommand{\emph}[1]{\textcolor{red}{#1}}
+
+% Document Metadata
+\title{Model fitting}
+\author{Joachim Vandekerckhove}
+\date{Winter 2025}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Item Response Models}
+  \begin{itemize}[<+->]
+    \item The two-parameter logistic (2PL) model describes the probability of a correct response:
+    \begin{equation}
+      P(y|\theta,a,b_i) = \frac{1}{1 + e^{-a(\theta - b_i)}}
+    \end{equation}
+    \item Parameters:
+    \begin{itemize}[<+->]
+      \item $a$: Discrimination (slope)
+      \item $b_i$: Difficulty (location) for item or condition $i$
+      \item $\theta$: Subject ability
+    \end{itemize}
+    \item The three-parameter logistic (3PL) adds a guessing parameter $c$:
+    \begin{equation}
+      P(y|\theta,a,b_i,c) = c + (1-c)\frac{1}{1 + e^{-a(\theta - b_i)}}
+    \end{equation}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Visualizing the 2PL Model}
+  \centering
+  \includegraphics[width=.75\textwidth]{2pl_curves.pdf}
+\end{frame}
+
+\begin{frame}{Ordinary Least Squares}
+  \begin{itemize}[<+->]
+    \item Ordinary Least Squares (OLS) is a common estimation method:
+    \begin{equation}
+      \hat{\beta} = \argmin_{\beta} \sum_{i=1}^{N} (y_i - f(x_i,\beta))^2
+    \end{equation}
+    \item Properties:
+    \begin{itemize}[<+->]
+      \item Minimizes squared differences between observed and predicted values (``loss'')
+      \item Optimal when errors are normally distributed
+      \item Has closed-form solution for linear models
+      \item Simple to implement and interpret
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Squared Error Estimation}
+  \begin{itemize}[<+->]
+    \item Implementing OLS for the 2PL model, parameters are estimated by minimizing squared error:
+    \begin{equation}
+      \text{SSE}(\theta,a,\mathbf{b},\mathbf{y}) = \sum_{i=1}^{N} (y_i - P(y_i|\theta,a,b_i))^2
+    \end{equation}
+    \item Where:
+    \begin{itemize}[<+->]
+      \item $y_i$ is the participant's observed response (0 or 1) to the $i^\text{th}$ item of $N$ items of varying difficulty $b_i$
+      \item $P(y_i|\theta,a,b_i)$ is the model prediction of $y_i$
+    \end{itemize}
+    \item This approach:
+    \begin{itemize}[<+->]
+      \item Is intuitive and widely used in simple cases
+      \item Assumes normally distributed errors
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Normality Assumption}
+  \centering
+  \includegraphics[width=.75\textwidth]{normal_error.pdf}
+  
+  \begin{itemize}[<+->]
+    \item May not be appropriate for non-normal errors
+    \item Can give biased estimates for binary outcomes
+    \item Fine for a first pass, but not optimal for many applications
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Maximum Likelihood Estimation}
+  \begin{itemize}[<+->]
+    \item For binary outcomes, likelihood is more appropriate:
+    \begin{equation}
+      L(\theta,a,\mathbf{b},\mathbf{y}) = \prod_{i=1}^{N} P(y_i|\theta,a,b_i)^{y_i} (1 - P(y_i|\theta,a,b_i))^{1-y_i}
+    \end{equation}
+    \item Taking the log gives the log-likelihood function:
+    \begin{equation}
+      \ell(\theta,a,\mathbf{b},\mathbf{y}) = \sum_{i=1}^{N} \left[y_i \log P(y_i|\theta,a,b_i) + (1-y_i) \log(1 - P(y_i|\theta,a,b_i))\right]
+    \end{equation}
+    \item Using the likelihood function instead of squared error appropriately accounts for the fact that \emph{some prediction errors are more severe than others}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Regularization}
+  \begin{itemize}[<+->]
+    \item Regularization is a technique used to prevent overfitting in models
+    \item It adds a penalty term to the loss function to discourage large parameter values
+    \item This helps in cases where there is a lot of data and many parameters
+    \item Let's consider a 2PL model with predictors on item difficulty:
+    \begin{equation}
+      P(y|\theta,a,x,\beta) = \frac{1}{1 + e^{-a(\theta - f(x,\beta))}}
+    \end{equation}
+    with $f(x,\beta) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_k x_k$
+    \begin{itemize}[<+->]
+      \item Here, $\beta$ is a vector of parameters for the predictors that replaces the item difficulty parameters $\mathbf{b}$
+      \item Fewer predictors is better for model parsimony and interpretability
+      \item Certainly, we need there to be fewer predictors than conditions, so $k < N$ 
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{LASSO and Ridge Regularization}
+  $$\ell(\theta,a,x,\beta) = \sum_{i=1}^{N} \left[y_i \log P(y|\theta,a,x,\beta) + (1-y_i) \log(1 - P(y|\theta,a,x,\beta))\right]$$
+  \begin{itemize}[<+->]
+    \item LASSO (Least Absolute Shrinkage and Selection Operator) equation:
+    \begin{equation}
+      \ell_{\text{LASSO}}(\theta,a,x,\beta) = \ell(\theta,a,x,\beta) - \lambda \sum_{j=1}^{k} |\beta_j|
+    \end{equation}
+    \item Ridge regularization equation:
+    \begin{equation}
+      \ell_{\text{Ridge}}(\theta,a,x,\beta) = \ell(\theta,a,x,\beta) - \lambda \sum_{j=1}^{k} \beta_j^2
+    \end{equation}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Interpretation of LASSO and Ridge Regularization}
+  \begin{itemize}[<+->]
+    \item LASSO:
+    \begin{itemize}[<+->]
+      \item Shrinks the coefficients towards zero
+    \item Can set some coefficients to zero, performing ``feature selection''
+    \item Is equivalent to a Bayesian model with a Laplace prior on the coefficients
+    \end{itemize}
+    \item Ridge:
+    \begin{itemize}[<+->]
+      \item Shrinks the coefficients towards zero
+      \item Does not set any coefficients to zero
+      \item Is equivalent to a Bayesian model with a Gaussian prior on the coefficients
+    \end{itemize}
+    \item Regularization is a form of Bayesian inference
+    \item Can be combined with likelihoods or more basic loss functions (like squared error)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusion}
+  \begin{itemize}[<+->]
+    \item The 2PL model is a close relative to Signal Detection Theory
+    \item You can fit the 2PL model using maximum likelihood estimation
+    \item You can regularize the model using LASSO and Ridge regularization
+    \item This is very similar to Bayesian parameter estimation
+    \item Soon, we will create python classes for:
+    \begin{itemize}[<+->]
+      \item the 2PL model
+      \item the regularized 2PL model
+    \end{itemize}
+    \item These classes will allow us to fit the model to data and perform inference
+    \item I will add a twist that is likely to confuse an AI assistant
+  \end{itemize}
+\end{frame}
+
+\maketitle
+
+\end{document}
+
