@@ -1,0 +1,125 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{metropolis}
+
+% Packages
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb, bm, graphicx}
+\usepackage{xcolor}
+\hypersetup{hidelinks}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% Define blood red color and redefine emph
+\definecolor{bloodred}{HTML}{CC0000}
+\renewcommand{\emph}[1]{\textcolor{red}{#1}}
+
+% Document Metadata
+\title{Modules and unittest}
+\author{Joachim Vandekerckhove}
+\date{Winter 2025}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{frame}[fragile]{Basic Test Structure in Python}
+    \begin{itemize}
+        \item Tests are organized in classes inheriting from \texttt{unittest.TestCase}
+        \item Each test method starts with \texttt{test\_}
+        \item Sometimes it is helpful to add a \texttt{setUp()} method
+    \end{itemize}
+    \begin{verbatim}
+class TestCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calc = Calculator()
+
+    def test_add(self):
+        self.assertEqual(self.calc.add(2, 3), 5)
+        self.assertEqual(self.calc.add(-1, 1), 0)
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}{Assert Methods}
+    Common assertions in unittest:
+    \begin{itemize}
+        \item \texttt{assertEqual(a, b)} - verify a equals b
+        \item \texttt{assertAlmostEqual(a, b)} - for floating point
+        \item \texttt{assertRaises(Error)} - verify exceptions
+        \item \texttt{assertTrue(x)} - verify x is True
+        \item \texttt{assertFalse(x)} - verify x is False
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Testing Edge Cases}
+    Example: Testing division by zero
+    \begin{verbatim}
+    def test_divide_by_zero(self):
+        with self.assertRaises(ValueError):
+            self.calc.divide(5, 0)
+    \end{verbatim}
+    \begin{itemize}
+        \item Test both normal and edge cases
+        \item Test invalid inputs
+        \item Test boundary conditions
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Testing Complex Behavior}
+    Example: Testing operation history
+    \begin{verbatim}
+    def test_history(self):
+        self.calc.add(2, 3)
+        self.calc.multiply(4, 5)
+        history = self.calc.get_history()
+        self.assertEqual(len(history), 2)
+    \end{verbatim}
+    \begin{itemize}
+        \item Test state changes
+        \item Test sequences of operations
+        \item Verify side effects
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Best Practices}
+    \begin{itemize}
+        \item Write tests before or while writing code (TDD)
+        \item One test method per feature/scenario
+        \item Clear, descriptive test names
+        \item Independent tests (no dependencies between tests)
+        \item Use \texttt{setUp()} for common initialization
+        \item Keep tests simple and focused
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Running Tests}
+    \begin{itemize}
+        \item Run all tests in the project:
+        \begin{verbatim}
+    python -m unittest discover -s tests
+        \end{verbatim}
+        \item Run a specific test file:
+        \begin{verbatim}
+    python -m unittest tests.test_operations
+        \end{verbatim}
+        \item Run a specific test case:
+        \begin{verbatim}
+    python -m unittest tests.test_operations.TestClass.test_method
+        \end{verbatim}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Project Structure for Tests}
+    Key requirements:
+    \begin{itemize}
+        \item Tests should be in a \texttt{tests} directory
+        \item Include empty \texttt{\_\_init\_\_.py} in \texttt{tests} directory
+        \item Test files should follow naming pattern \texttt{test\_*.py}
+        \item Run tests from project root directory
+    \end{itemize}
+\end{frame}
+
+\maketitle
+
+\end{document}
+
