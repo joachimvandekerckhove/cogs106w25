@@ -1,0 +1,547 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetheme{metropolis}
+
+% Packages
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb, bm, graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\hypersetup{hidelinks}
+ 
+% Configure listings for Python code
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    showstringspaces=false,
+    frame=tb,
+    rulecolor=\color{palegreen},
+    backgroundcolor=\color{paleyellow},
+    xleftmargin=2.5mm,
+    xrightmargin=2.5mm,
+    framexleftmargin=2.5mm,    % internal left padding
+    framexrightmargin=2.5mm,   % internal right padding
+    framesep=2.5mm,            % vertical padding (top and bottom)
+    numbers=none,
+    breaklines=true,
+    breakatwhitespace=true,
+    escapeinside={(*@}{@*)},
+    basicstyle=\ttfamily\scriptsize
+}
+
+\definecolor{paleyellow}{rgb}{0.98,0.98,0.9}
+\definecolor{brickred}{rgb}{0.8,0.2,0.2}
+\definecolor{palegreen}{rgb}{0.9,0.98,0.9}
+\renewcommand{\emph}[1]{\textcolor{red}{#1}}
+
+% Document Metadata
+\title{Error handling}
+\author{Joachim Vandekerckhove}
+\date{Winter 2025}
+
+\begin{document}
+
+\frame{\titlepage}
+
+% Slide: Introduction
+\begin{frame}{Introduction to Error Handling}
+    \textbf{Why is error handling important?}
+    \begin{itemize}[<+->]
+        \item Errors are inevitable in programming
+        \item Proper handling improves software robustness and usability
+        \item Helps with debugging and logging
+        \item Good error handling prevents crashes
+        \item Most importantly, it prevents unexpected behavior
+    \end{itemize}
+\end{frame}
+
+% Slide: Overview of Error Types
+\begin{frame}{Categories of Errors in Python}
+    \begin{itemize}
+        \item<1-> \textbf{Syntax Errors}
+        \begin{itemize}[<2->]
+            \item Caught before execution
+            \item Invalid Python syntax
+        \end{itemize}
+        \item<3-> \textbf{Runtime Errors (Exceptions)}
+        \begin{itemize}[<4->]
+            \item Occur during program execution
+            \item Many types: ZeroDivisionError, TypeError, IndexError, etc.
+            \item Can be caught and handled
+        \end{itemize}
+        \item<5-> \textbf{Logical Errors}
+        \begin{itemize}[<6->]
+            \item Program runs but produces wrong results
+            \item Hardest to detect -- no error messages
+            \item Require careful testing and debugging
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Slide: Syntax Errors
+\begin{frame}[fragile]{Syntax Errors}
+    \textbf{Example of a Syntax Error:}
+    \pause
+    \begin{lstlisting}
+>>> print "Hello"
+  File "<stdin>", line 1
+    print "Hello"
+    ^^^^^^^^^^^^^
+SyntaxError: Missing parentheses in call to 'print'. Did you mean print(...)?
+    \end{lstlisting}
+\end{frame}
+
+% Slide: Logical Errors
+\begin{frame}[fragile]{Logical Errors}
+    \textbf{Example of a Logical Error:}
+    \pause
+    \begin{lstlisting}
+>>> # Task: Average the first five numbers
+>>> total = 0
+>>> for i in range(5):
+...     total += i
+>>> print(f"Average: {total/5}")
+Average: 2.0
+>>> # Bug: off by one
+    \end{lstlisting}
+\end{frame}
+
+% Slide: Runtime Error - ZeroDivisionError
+\begin{frame}[fragile]{Runtime Errors}
+    \texttt{ZeroDivisionError}
+    \begin{itemize}[<+->]
+        \item Occurs when dividing by zero
+        \item Common in mathematical calculations
+    \end{itemize}
+    \pause
+    \begin{lstlisting}
+>>> 10 / 0
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: division by zero
+    \end{lstlisting}
+\end{frame}
+
+% Slide: Runtime Error - IndexError
+\begin{frame}[fragile]{Runtime Errors}
+    \texttt{IndexError}
+    \begin{itemize}[<+->]
+        \item Occurs when accessing a non-existent index
+        \item Common when working with sequences (lists, tuples, etc.)
+    \end{itemize}
+    \pause
+    \begin{lstlisting}
+>>> nums = [1, 2, 3]
+>>> nums[5]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+IndexError: list index out of range
+    \end{lstlisting}
+\end{frame}
+
+% Slide: Runtime Error - TypeError
+\begin{frame}[fragile]{Runtime Errors}
+    \texttt{TypeError}
+    \begin{itemize}[<+->]
+        \item Occurs when an operation is performed on incompatible types
+        \item Common when mixing different data types
+    \end{itemize}
+    \pause
+    \begin{lstlisting}
+>>> "hello" + 42
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: can only concatenate str (not "int") to str
+
+>>> len(42)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: object of type 'int' has no len()
+    \end{lstlisting}
+\end{frame}
+
+
+% Slide: Common Python Exceptions Table
+\begin{frame}{Common Python Exceptions}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{table}
+            \small
+            \begin{tabular}{@{}ll@{}}
+                \textbf{Exception} & \textbf{Description} \\ \hline
+                SyntaxError & Invalid syntax \\
+                TypeError & Wrong type \\
+                ValueError & Invalid value \\
+                IndexError & Bad sequence index \\
+                KeyError & Key not found \\
+                NameError & Name not found \\
+                AttributeError & Missing attribute \\
+                ImportError & Import failed \\ \hline
+            \end{tabular}
+            \end{table}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{table}
+            \small
+            \begin{tabular}{@{}ll@{}}
+                \textbf{Exception} & \textbf{Description} \\ \hline
+                FileNotFoundError & File not found \\
+                IOError & I/O operation failed \\
+                ZeroDivisionError & Division by zero \\
+                AssertionError & Assert failed \\
+                RuntimeError & Generic error \\
+                OverflowError & Value too large \\
+                MemoryError & Out of memory \\
+                OSError & System error \\ \hline
+            \end{tabular}
+            \end{table}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+% Detailed Exception Slides - Input/Output
+\begin{frame}{I/O Related Exceptions}
+    \onslide<1->{\textbf{FileNotFoundError}}
+    \begin{itemize}[<2->]
+        \item File path doesn't exist
+        \item Common in: file operations, config loading, data processing
+        \item Example: \texttt{open('missing.txt', 'r')}
+    \end{itemize}
+
+    \onslide<5->{\textbf{IOError}}
+    \begin{itemize}[<6->]
+        \item General input/output failures
+        \item Disk full, pipe broken, network timeout
+        \item Example: writing to a closed file
+    \end{itemize}
+
+\end{frame}
+
+% Data Structure Exceptions
+\begin{frame}{Data Structure Exceptions}
+    \onslide<1->{\textbf{IndexError}}
+    \begin{itemize}[<2->]
+        \item Accessing sequence beyond bounds
+        \item Example: \texttt{alphabet[27]} on a list of size 26
+    \end{itemize}
+
+    \onslide<4->{\textbf{KeyError}}
+    \begin{itemize}[<5->]
+        \item Missing dictionary key
+        \item Example: \texttt{dict['missing\_key']}
+    \end{itemize}
+
+    \onslide<7->{\textbf{AttributeError}}
+    \begin{itemize}[<8->]
+        \item Accessing non-existent object attribute
+        \item Example: \texttt{sdt.flaseAlarms()}
+    \end{itemize}
+\end{frame}
+
+% Type and Value Exceptions
+\begin{frame}{Type and Value Exceptions}
+    \onslide<1->{\texttt{TypeError}}
+    \begin{itemize}[<2->]
+        \item Operation on incompatible types
+        \item Example: \texttt{"U" + 2}
+    \end{itemize}
+
+    \onslide<4->{\texttt{ValueError}}
+    \begin{itemize}[<5->]
+        \item Right type but invalid value
+        \item Common in: parsing, conversion operations
+        \item Example: \texttt{int("not a number")}
+    \end{itemize}
+
+    \onslide<8->{\texttt{NameError}}
+    \begin{itemize}[<9->]
+        \item Using undefined variable
+        \item Example: typos, scope issues, using variable before assignment
+    \end{itemize}
+\end{frame}
+
+% Resource and System Exceptions
+\begin{frame}{Resource and System Exceptions}
+    \onslide<1->{\texttt{MemoryError}}
+    \begin{itemize}[<2->]
+        \item Out of memory
+        \item Example: creating huge lists/arrays, infinite recursion
+    \end{itemize}
+
+    \onslide<4->{\texttt{OverflowError}}
+    \begin{itemize}[<5->]
+        \item Arithmetic operation too large
+        \item Example: very large exponential operations
+    \end{itemize}
+
+    \onslide<7->{\texttt{ImportError}}
+    \begin{itemize}[<8->]
+        \item Module import fails
+        \item Example: importing non-installed package
+    \end{itemize}
+\end{frame}
+
+% Special Cases
+\begin{frame}{Special Case Exceptions}
+    \onslide<1->{\texttt{ZeroDivisionError}}
+    \begin{itemize}[<2->]
+        \item Division or modulo by zero
+        \item Example: \texttt{x / 0} or \texttt{y \% 0}
+    \end{itemize}
+
+    \onslide<4->{\texttt{AssertionError}}
+    \begin{itemize}[<5->]
+        \item Assert statement fails
+    \end{itemize}
+
+    \onslide<6->{\texttt{RuntimeError}}
+    \begin{itemize}[<7->]
+        \item Base class for many custom exceptions
+        \item When no other error type will do
+    \end{itemize}
+\end{frame}
+
+% Slide: Try-Except Blocks
+\begin{frame}[fragile]{Handling Exceptions: Try-Except Blocks}
+    \textbf{Basic Syntax}
+    \pause
+    \begin{lstlisting}
+try:
+    x = 1 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+    \end{lstlisting}
+    
+    \pause
+    \textbf{Why is this important?}
+    \begin{itemize}[<+->]
+        \item Prevents crashes and allows graceful failure handling
+        \item Allows debugging by catching and logging errors
+    \end{itemize}
+    \pause
+    \emph{Do not use try-except to continue execution unless you know exactly what is going on!}
+\end{frame}
+
+% Slide: Else and Finally
+\begin{frame}[fragile]{Else and Finally Blocks}
+    \textbf{Using Else and Finally}
+    \begin{itemize}[<+->]
+        \item \texttt{else}: Runs only if no exception occurs
+        \item \texttt{finally}: Runs regardless of whether an exception occurred or not
+    \end{itemize}
+
+    \pause
+    \textbf{Example}
+    \pause
+    \begin{lstlisting}
+try:
+    num = int(input("Enter a number: "))
+except ValueError:
+    print("Invalid input!")
+else:
+    print("You entered:", num)
+    \end{lstlisting}
+
+    \pause
+    (What else can age not be?)
+\end{frame}
+
+% Avoid defensive programming
+\begin{frame}[fragile]{Avoid defensive programming!}
+    \begin{itemize}[<+->]
+        \item A practice you should avoid is to use \texttt{else:} to 
+        continue execution notwithstanding the fact that an 
+        exception occurred
+        
+        \item If the user supplied invalid input,
+        you should error and tell them what they did wrong
+    \end{itemize}
+
+    \onslide<3->{\emph{Avoid defensive programming!}}
+\end{frame}
+
+% Catch multiple possible exceptions
+\begin{frame}[fragile]{Catch multiple possible exceptions}
+    \begin{lstlisting}
+try:
+    num = int(input("Enter a number: "))
+    if num < 0:
+        raise ValueError("Number cannot be negative")
+    if num > 100:
+        raise ValueError("Number must be 100 or less")
+except ValueError as e:
+    print(f"Invalid number: {e}")
+    raise
+except TypeError as e:
+    print(f"Wrong type of input: {e}")
+    raise
+except Exception as e:  # Catch any unexpected errors
+    print(f"Unexpected error: {e}")
+    raise
+
+print("You entered:", num)
+return num  # Actually use the validated input
+    \end{lstlisting}
+\end{frame}
+
+% Slide: Raising Exceptions
+\begin{frame}[fragile]{Raising Exceptions}
+    \textbf{Why Raise Exceptions?}
+    \begin{itemize}
+        \item To signal an error when a function receives invalid input.
+        \item Makes debugging easier by identifying issues early.
+    \end{itemize}
+
+    \textbf{Example}
+    \begin{lstlisting}
+def check_age(age):
+    if age < 0:
+        raise ValueError("Age cannot be negative!")
+    \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Using Appropriate Exceptions: Examples}
+    \textbf{Example: Input Validation}
+    
+    Input validation is convenient in separate methods.
+    \pause
+    \begin{lstlisting}
+def process_age(age_str):
+    try:
+        age = int(age_str)  # ValueError if not a number
+        if age < 0:
+            raise ValueError("Age cannot be negative")
+        if age > 150:
+            raise ValueError("Age seems unrealistic")
+        return age # Everything went well
+    except ValueError as e:
+        print(f"Invalid age: {e}")
+        raise
+    except Exception as e:  # Catch any unexpected errors
+        print(f"Unexpected error processing age: {e}")
+        raise
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Using Appropriate Exceptions: More Examples}
+    \textbf{Example: File Operations}
+    \pause
+    \begin{lstlisting}
+def read_config(filename):
+    try:
+        with open(filename) as f:  # FileNotFoundError
+            data = json.loads(f.read())  # JSONDecodeError
+            return data['settings']  # KeyError
+    except FileNotFoundError:
+        print("Config file missing")
+        raise  # Re-raise the current exception
+    except json.JSONDecodeError:
+        print("Invalid JSON format")
+        raise
+    except KeyError:
+        print("Missing 'settings' in config")
+        raise
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        raise
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{When to Use Custom Exceptions}
+    \textbf{Create Custom Exceptions When:}
+    \begin{itemize}
+        \item Built-in exceptions don't clearly convey the error
+        \item You need domain-specific error handling
+        \item You want to group related errors
+        \item You need to add custom error attributes
+    \end{itemize}
+
+    \textbf{Examples of Good Custom Exceptions:}
+    \begin{itemize}
+        \item \texttt{DatabaseConnectionError}
+        \item \texttt{InvalidConfigurationError}
+        \item \texttt{UserAuthenticationError}
+        \item \texttt{APIRateLimitExceeded}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Creating and Using Custom Exceptions}
+    \textbf{Example: Custom Exception Class}
+    \pause
+    \begin{lstlisting}
+class ConfigError(Exception):
+    def __init__(self, message, missing_keys=None):
+        self.missing_keys = missing_keys or []
+        super().__init__(message)
+
+def validate_config(config):
+    required = ['api_key', 'host', 'port']
+    missing = [k for k in required if k not in config]
+    if missing:
+        raise ConfigError("Missing required keys", missing)
+    \end{lstlisting}
+\end{frame}
+
+
+% Slide: Logging Errors
+\begin{frame}[fragile]{Logging Errors Instead of Printing}
+    \textbf{Why Use Logging?}
+    \begin{itemize}[<+->]
+        \item Avoids cluttering the console.
+        \item Keeps a permanent record of errors.
+        \item Helps with debugging and monitoring in production.
+    \end{itemize}
+
+    \pause
+    \textbf{Example}
+    \pause
+    \begin{lstlisting}
+import logging
+logging.basicConfig(filename="errors.log", level=logging.ERROR)
+try:
+    1 / 0
+except ZeroDivisionError as e:
+    logging.error(f"Error: {e}")
+    \end{lstlisting}
+\end{frame}
+
+% Slide: Testing Exception Handling
+\begin{frame}[fragile]{Testing Exception Handling}
+    \textbf{Using unittest}
+    \pause
+    \begin{lstlisting}
+import unittest
+
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError("Cannot divide by zero!")
+    return a / b
+
+class TestDivide(unittest.TestCase):
+    def test_zero_division(self):
+        with self.assertRaises(ZeroDivisionError):
+            divide(1, 0)
+    \end{lstlisting}
+\end{frame}
+
+% Slide: Best Practices
+\begin{frame}{Best Practices for Error Handling}
+    \textbf{Dos and Don'ts}
+    \begin{itemize}[<+->]
+        \item \textbf{Catch specific exceptions} instead of using a broad \texttt{Exception}
+        \item \textbf{Use logging} instead of \texttt{print()} to track errors
+        \item \textbf{Use \texttt{finally}} to clean up resources like file handles or database connections
+        \item \textbf{Don't suppress exceptions} without handling them properly
+        \item \textbf{Use custom exceptions} for better error categorization
+        \item \textbf{Write tests} to verify that exception handling works correctly
+    \end{itemize}
+\end{frame}
+
+\maketitle
+
+\end{document}
