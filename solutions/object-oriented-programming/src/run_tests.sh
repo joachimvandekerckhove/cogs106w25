@@ -7,4 +7,4 @@ PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 export PYTHONPATH="$PROJECT_ROOT:$PYTHONPATH"
 
 # Run all tests in the tests directory
-python3 -m unittest discover -s "$PROJECT_ROOT/tests" -v
+python3 -m unittest discover -s "$PROJECT_ROOT/test" -v
