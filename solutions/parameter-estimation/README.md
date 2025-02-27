@@ -64,26 +64,26 @@ This is a little cumbersome, but when we split the calculation into components, 
 
 #### Class Requirements:
 1. Constructor should accept:
-   - An object of class Experiment
-   - (If you are not happy with your implementation of Experiment or SignalDetection, you can use the one provided in the repo.)
+   - An object of class `Experiment`
+   - (If you are not happy with your implementation of `Experiment` or `SignalDetection`, you can use the one provided in the repo.)
 
 2. Methods:
-   - summary(self): Returns a dictionary with the following keys:
-     - n_total: total number of trials
-     - n_correct: number of correct trials
-     - n_incorrect: number of incorrect trials
-     - n_conditions: number of conditions
-   - predict(self, parameters): Returns probability of correct response in each condition, given the parameters
-   - negative_log_likelihood(self, parameters): Computes negative log-likelihood of the data given the parameters
-   - fit(self): Implements maximum likelihood estimation to find best fitting discrimination parameter and base rate parameter
-   - get_discrimination(self): Returns estimate of discrimination parameter $a$
-   - get_base_rate(self): Returns estimate of base rate parameter $c$ (not $q$!)
+   - `summary(self)`: Returns a dictionary with the following keys:
+     - `n_total`: total number of trials
+     - `n_correct`: number of correct trials
+     - `n_incorrect`: number of incorrect trials
+     - `n_conditions`: number of conditions
+   - `predict(self, parameters)`: Returns probability of correct response in each condition, given the parameters
+   - `negative_log_likelihood(self, parameters)`: Computes negative log-likelihood of the data given the parameters
+   - `fit(self)`: Implements maximum likelihood estimation to find best fitting discrimination parameter and base rate parameter
+   - `get_discrimination(self)`: Returns estimate of discrimination parameter $a$
+   - `get_base_rate(self)`: Returns estimate of base rate parameter $c$ (not $q$!)
 
 3. Attributes:
-   - _base_rate: base rate parameter $c$
-   - _logit_base_rate: logit of the base rate parameter $q$
-   - _discrimination: discrimination parameter $a$
-   - _is_fitted: boolean indicating whether the model has been fitted successfully (if the model has not been fitted, the user should not be able to access the parameters)
+   - `_base_rate`: base rate parameter $c$
+   - `_logit_base_rate`: logit of the base rate parameter $q$
+   - `_discrimination`: discrimination parameter $a$
+   - `_is_fitted`: boolean indicating whether the model has been fitted successfully (if the model has not been fitted, the user should not be able to access the parameters)
 
 Note that these attributes are private, so you need to create methods to get and set them.
 
@@ -107,19 +107,19 @@ Using unittest, write multiple test cases:
    - Test that constructor raises appropriate exceptions for invalid inputs (e.g., mismatched lengths, or trying to access parameter estimates that aren't determined yet)
 
 2. Prediction:
-   - Test that predict() returns values between 0 and 1 (inclusive)
+   - Test that `predict()` returns values between 0 and 1 (inclusive)
    - Test that higher base rate values $c$ result in higher probabilities, all other parameters being equal
    - Test that higher difficulty values $b_i$ result in lower probabilities when $a$ is positive, and higher probabilities when $a$ is negative
    - Test that higher ability parameters $\theta$ result in higher probabilities when $a$ is positive, and lower probabilities when $a$ is negative
    - Test that prediction with known parameter values matches the expected output
 
 3. Parameter Estimation:
-   - Test that negative_log_likelihood improves after fitting compared to the initial guess of the parameters
+   - Test that `negative_log_likelihood` improves after fitting compared to the initial guess of the parameters
    - Test that a larger estimate of $a$ is returned when we supply data with a steeper curve (i.e., higher discrimination)
    - Verify that the user cannot request parameter estimates before the model is fit
 
 4. Integration:
-   - Test that parameters remain approximately stable when fitting multiple times (i.e., that fit() approximately converges to stable values)
+   - Test that parameters remain approximately stable when fitting multiple times (i.e., that `fit()` approximately converges to stable values)
    - In your unit test class, create one integration test that:
        1. Creates a dataset with five conditions and 100 trials per condition, with accuracy rates of exactly 0.55, 0.60, 0.75, 0.90, and 0.95 (do not use random numbers)
        2. Fits the model to this data
@@ -131,13 +131,13 @@ Using unittest, write multiple test cases:
 
 ### Part III: Bash script to run tests
 
-Create a `#!` bash script in src/run_tests.sh that runs the tests.
+Create a `#!` bash script in `src/run_tests.sh` that runs the tests.
 
 
 ## Notes
-- You will need the SignalDetection and Experiment classes, place them in their own .py files in src/
-- You will need numpy and scipy
-- To test numpy arrays, you need a numpy function:
+- You will need the `SignalDetection` and `Experiment` classes, place them in their own `.py` files in `src/`
+- You will need `numpy` and scipy`
+- To test `numpy` arrays, you need a `numpy` function:
 
 ```python
     def test_default_difficulty(self):
@@ -147,9 +147,9 @@ Create a `#!` bash script in src/run_tests.sh that runs the tests.
 
 ## Submission Requirements
 - Submit a link to your github repo, which should contain the following:
-    - src/SimplifiedThreePL.py (Python file containing SimplifiedThreePL class)
-    - src/Experiment.py (Python file containing Experiment class)
-    - src/SignalDetection.py (Python file containing SignalDetection class)
-    - tests/test_SimplifiedThreePL.py (Unit and integration tests)
-    - src/run_tests.sh (Bash script to run tests)
-    - __init__.py files in appropriate places
+    - `src/SimplifiedThreePL.py` (Python file containing `SimplifiedThreePL` class)
+    - `src/Experiment.py` (Python file containing `Experiment` class)
+    - `src/SignalDetection.py` (Python file containing `SignalDetection` class)
+    - `tests/test_SimplifiedThreePL.py` (Unit and integration tests)
+    - `src/run_tests.sh` (Bash script to run tests)
+    - `__init__.py` files in appropriate places
