@@ -37,6 +37,7 @@ This will be our loss function, that needs to be minimized.
 It will be convenient to use the logit link for the base rate parameter. That means that we will be using the logit function to transform the base rate parameter $c$ into a variable $q$ that can take any value on the real line. This is a common technique in statistics for dealing with parameters that are bounded between 0 and 1.  Instead of estimating $c$, we will estimate $q$, which will be easier because it is not bounded.  Then after estimating $q$, we will transform it back to $c$ using the inverse logit function.
 
 Logit link (left) and inverse logit link (right):
+
 $$
 q = \log \left( \frac{c}{1 - c} \right) \Leftrightarrow c = \frac{1}{1 + e^{-q}}
 $$
@@ -44,14 +45,14 @@ $$
 The negative log-likelihood function with the logit link becomes:
 
 $$
--\log L(a, \theta, b_i, q) = -\sum_{i=1}^n \left\{
+-\log L(a, \theta, b_i, q) = -\sum_{i=1}^n \left[
       n_i^c \log \left[ 
          \frac{1}{1 + e^{-q}} + \left(1 - \frac{1}{1 + e^{-q}}\right) \frac{1}{1 + e^{-a(\theta-b_i)}} 
       \right] + 
       n_i^e \log \left[ 
          1 - \frac{1}{1 + e^{-q}} - \left(1 - \frac{1}{1 + e^{-q}}\right) \frac{1}{1 + e^{-a(\theta-b_i)}} 
       \right] 
-\right\}
+\right]
 $$
 
 This is a little cumbersome, but when we split the calculation into components, it will be easy to implement.
