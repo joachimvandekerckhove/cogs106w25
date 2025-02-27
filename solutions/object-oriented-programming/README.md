@@ -102,7 +102,7 @@ too!
 
 Please submit the link to your GitHub repository.  Links to GitHub
 repositories have the format
-`https://github.com/<username>/<gitarchive>`.
+`https://github.com/<your-username>/<gitarchive>`.
 
 Everyone should submit a link to their own repository. The easiest way to make
 sure that everyone's repositories are in sync is by choosing one of your team

@@ -153,3 +153,5 @@ Create a `#!` bash script in `src/run_tests.sh` that runs the tests.
     - `tests/test_SimplifiedThreePL.py` (Unit and integration tests)
     - `src/run_tests.sh` (Bash script to run tests)
     - `__init__.py` files in appropriate places
+
+Your GitHub link should look something like this:  `https://github.com/<your-username>/parameter-estimation` .
