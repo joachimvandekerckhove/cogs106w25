@@ -169,8 +169,5 @@ this:
 Please submit the link to your GitHub repository.  The link to your GitHub
 repository should have the format `https://github.com/<your-username>/test-driven-development`.
 
-**Make sure the visibility of the repository is set to public.**   [Here's how
-to do that.](https://docs.github.com/en/repositories/managing-your-
-repositorys-settings-and-features/managing-repository-settings/setting-
-repository-visibility#changing-a-repositorys-visibility)
+**Make sure the visibility of the repository is set to public.**   [Here's how to do that.](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility#changing-a-repositorys-visibility)
 
