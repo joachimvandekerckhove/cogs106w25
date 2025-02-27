@@ -136,7 +136,7 @@ Create a `#!` bash script in `src/run_tests.sh` that runs the tests.
 
 ## Notes
 - You will need the `SignalDetection` and `Experiment` classes, place them in their own `.py` files in `src/`
-- You will need `numpy` and scipy`
+- You will need `numpy` and `scipy`
 - To test `numpy` arrays, you need a `numpy` function:
 
 ```python
